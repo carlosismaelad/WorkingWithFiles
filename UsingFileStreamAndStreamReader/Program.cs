@@ -10,16 +10,18 @@
 
             // Recurso externo não gerenciado pelo CLR
             // Uma conversa com o sistema operacional
-            FileStream fs = null;
+
             StreamReader sr = null;
 
             try
             {
-                fs = new FileStream(path, FileMode.Open);
-                sr = new StreamReader(fs);
+                sr = File.OpenText(path);
 
-                string line = sr.ReadLine();
-                Console.Write(line);
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    Console.WriteLine(line);
+                }
             }
             catch (IOException e)
             {
@@ -30,7 +32,6 @@
                 // Fechando as streams
                 // Se for diferente de nulo (aberto)
                 if (sr != null) sr.Close();
-                if (fs != null) fs.Close();
             }
         }
     }
